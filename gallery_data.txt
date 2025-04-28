@@ -1,0 +1,27 @@
+[
+    {
+        "name": "ng 1",
+        "city": "NDPM",
+        "image": "/media/gallery/ng1.jpg"
+    },
+    {
+        "name": "ng 2",
+        "city": "BPL",
+        "image": "/media/gallery/ng2.jpg"
+    },
+    {
+        "name": "ng 3 ",
+        "city": "JBP",
+        "image": "/media/gallery/ng3.jpg"
+    },
+    {
+        "name": "ng 4",
+        "city": "NGP",
+        "image": "/media/gallery/ng4.jpg"
+    },
+    {
+        "name": "ng 5",
+        "city": "SAG",
+        "image": "/media/gallery/ng5.jpg"
+    }
+]
