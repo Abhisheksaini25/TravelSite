@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <a href="/" class="absolute left-5 top-10 bg-black text-white px-4 py-2 rounded hover:bg-red-500 transition-all">Home</a>
+  <h1 class="font-extrabold text-4xl mb-6 text-center pt-10">Gallery</h1>
+
+  <div class="flex justify-center mb-6">
+    <button onclick="openModal()" class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">
+      Add a Photo
+    </button>
+  </div>
+
+  <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-1">
+    {% for dest in destinations %}
+      <div class="">
+        <img src="{{ dest.image }}" alt="{{ dest.name }}" class="rounded-md h-48 w-full object-cover mb-3">
+        <h2 class="text-center font-bold">{{ dest.name }}</h2>
+        <p class="text-center text-gray-600">{{ dest.city }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Modal -->
+  <div id="photoModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg w-96">
+      <h2 class="text-2xl mb-4 font-bold text-center">Add New Photo</h2>
+      <form id="photoForm">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label class="block font-semibold mb-2">Name</label>
+          <input type="text" name="name" required class="w-full border border-gray-300 rounded px-3 py-2">
+        </div>
+        <div class="mb-4">
+          <label class="block font-semibold mb-2">City</label>
+          <input type="text" name="city" required class="w-full border border-gray-300 rounded px-3 py-2">
+        </div>
+        <div class="mb-4">
+          <label class="block font-semibold mb-2">Image</label>
+          <input type="file" name="image" accept="image/*" required class="w-full border border-gray-300 rounded px-3 py-2">
+        </div>
+        <div class="flex justify-between">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">
+            Upload
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('photoModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('photoModal').classList.add('hidden');
+    }
+
+    document.getElementById('photoForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      formData.append('csrfmiddlewaretoken', csrfToken);
+
+      const response = await fetch("{% url 'add_photo' %}", {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          const gallery = document.getElementById('gallery');
+          const newCard = document.createElement('div');
+          newCard.innerHTML = `
+            <img src="${data.image}" class="rounded-md h-48 w-full object-cover mb-3">
+            <h2 class="text-center font-bold">${data.name}</h2>
+            <p class="text-center text-gray-600">${data.city}</p>
+          `;
+          gallery.prepend(newCard);
+
+          form.reset();
+          closeModal();
+        }
+      } else {
+        alert("Failed to upload. Try again!");
+      }
+    });
+  </script>
+
+</body>
+</html>

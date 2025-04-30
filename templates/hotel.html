@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotels</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<div class="flex items-center justify-center pt-10">
+  <a href="/" class="absolute left-5 top-10 bg-black text-white px-4 py-2 rounded hover:bg-red-500 transition-all">Home</a>
+  <h1 class="font-extrabold text-4xl mb-3 text-center">Hotels</h1>
+</div>
+  <div class="flex justify-center mt-5">
+    <select id="cityFilter" onchange="filterHotels()" class="border border-gray-400 rounded px-4 py-2">
+    <option value="all" {% if selected_city == "all" %}selected{% endif %}>All Cities</option>
+    {% for city in cities %}
+      <option value="{{ city|lower }}" {% if selected_city == city|lower %}selected{% endif %}>
+        {{ city|title }}
+      </option>
+    {% endfor %}
+  </select>
+  </div>
+
+  <div id="hotelContainer" class="flex flex-wrap justify-center gap-5 pt-10 pb-10">
+    {% for hotel in hotels %}
+    <div class="h-[425px] w-[300px] bg-white shadow-lg ml-3 mt-[80px] mb-[10px] hotel-card" data-city="{{ hotel.city|lower }}">
+      <img src="../static/hotels/{{hotel.image}}.jpg" alt="{{ hotel.name }}" class="h-[20vw] w-full object-cover">
+      <div class="flex items-center justify-evenly p-2">
+        <h1 class="font-extrabold font-serif text-xl">{{ hotel.name }}</h1>
+        <h4><i class="ri-star-fill text-yellow-400 text-xl"></i>&nbsp;4.9</h4>
+      </div>
+      <div class="flex items-center justify-evenly p-2">
+        <i class="ri-hotel-bed-fill">&nbsp;Bed</i>
+        <i class="ri-showers-line">&nbsp;Bath</i>
+        <i class="ri-parking-box-fill">&nbsp;Parking</i>
+        <button class="bg-black h-7 w-7 rounded-full text-white text-[14px]">+3</button>
+      </div>
+      <div class="flex items-center justify-evenly p-2 mt-[3px]">
+        <h1>{{ hotel.price }}</h1>
+        <button class="bg-black h-[35px] w-[90px] text-white text-[14px] hover:bg-red-500">Book Now</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    function filterHotels() {
+    const filter = document.getElementById("cityFilter").value;
+    const hotels = document.querySelectorAll(".hotel-card");
+
+    hotels.forEach(hotel => {
+      if (filter === "all" || hotel.getAttribute("data-city") === filter) {
+        hotel.style.display = "block";
+      } else {
+        hotel.style.display = "none";
+      }
+    });
+  }
+
+  // Automatically apply filter on page load
+  window.onload = filterHotels;
+  </script>
+
+</body>
+</html>

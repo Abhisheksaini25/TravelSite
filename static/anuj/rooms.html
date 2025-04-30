@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+   
+    <h1 class="font-extrabold text-4xl mb-3 text-center pt-10 ">Rooms</h1>
+    <h1 class="border-b border-[1px] border-black"></h1>
+     <div id="hotelContainer" class=" flex flex-wrap justify-center gap-5 pt-10 pb-10">
+    <div  class="h-[425px] w-[300px] bg-white shadow-lg ml-3 mt-[80px] mb-[10px]">
+        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/5d/f3/00/caption.jpg?w=500&h=500&s=1" alt="" class="h-[20vw] w-full ">
+         
+        <div class="flex items-center justify-evenly p-1">
+         <a href="#" class="no-underline">
+  <h1 class="font-extrabold font-serif text-1xl">Hotel Meghdoot</h1>
+</a>
+            
+             <h4><i class="ri-star-fill text-yellow-400 text-1xl "></i>&nbsp;4.9</h4>
+        </div>
+        <div class="flex items-center justify-evenly p-1">
+            <i class="ri-hotel-bed-fill">&nbsp;Bed</i>
+
+            <i class="ri-showers-line">&nbsp;Bath</i>
+            <i class="ri-parking-box-fill">&nbsp;Parking</i>
+            <button class="bg-black h-7 w-7 rounded-3xl text-white text-[14px] text-center">+3</button>
+        </div>
+
+        <div class="flex items-center justify-evenly p-1 mt-[3px] ">
+            <h1>₹500/per night</h1>
+            <button class="bg-black h-[35px] w-[90px]  text-white text-[14px] text-center hover:bg-red-500 hover:text-white">Book Now</button>
+             
+        </div>
+        
+    </div>
+     
+      </div>
+    
+     
+
+
+    
+    
+</body>
+<script>
+   
+ const hotels = [
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,1",
+    name: "The Grand Residency",
+    city: "Bhopal",
+    rating: "4.5 (22K+)",
+    services: ["Bed", "Bath", "Parking", "WiFi", "AC"],
+    price: 1800,
+    location: { lat: 23.2599, lng: 77.4126 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,2",
+    name: "Indore Palace",
+    city: "Indore",
+    rating: "4.3 (18K+)",
+    services: ["Bed", "Bath", "Parking", "Gym", "Restaurant"],
+    price: 1600,
+    location: { lat: 22.7196, lng: 75.8577 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,3",
+    name: "Royal Heritage",
+    city: "Gwalior",
+    rating: "4.7 (20K+)",
+    services: ["Bed", "Bath", "Parking", "Pool", "Spa"],
+    price: 2100,
+    location: { lat: 26.2183, lng: 78.1828 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,4",
+    name: "Ujjain Retreat",
+    city: "Ujjain",
+    rating: "4.2 (16K+)",
+    services: ["Bed", "Bath", "Parking", "WiFi", "Restaurant"],
+    price: 1400,
+    location: { lat: 23.1793, lng: 75.7849 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,5",
+    name: "Nagpur Heights",
+    city: "Nagpur",
+    rating: "4.6 (21K+)",
+    services: ["Bed", "Bath", "Parking", "Pool", "Room Service"],
+    price: 1700,
+    location: { lat: 21.1458, lng: 79.0882 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,6",
+    name: "Panna Paradise",
+    city: "Panna",
+    rating: "4.4 (19K+)",
+    services: ["Bed", "Bath", "WiFi", "AC", "Restaurant"],
+    price: 1900,
+    location: { lat: 24.7220, lng: 80.1875 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,7",
+    name: "Pench Woods",
+    city: "Pench",
+    rating: "4.8 (20K+)",
+    services: ["Bed", "Bath", "Parking", "Game Room", "Spa"],
+    price: 2000,
+    location: { lat: 21.7645, lng: 79.2987 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,8",
+    name: "Omkareshwar Haveli",
+    city: "Omkareshwar",
+    rating: "4.1 (14K+)",
+    services: ["Bed", "Bath", "AC", "Room Service", "Breakfast"],
+    price: 1300,
+    location: { lat: 22.2413, lng: 76.1486 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,9",
+    name: "Orchha Heritage Resort",
+    city: "Orchha",
+    rating: "4.5 (17K+)",
+    services: ["Bed", "Bath", "Parking", "Pool", "Restaurant"],
+    price: 1750,
+    location: { lat: 25.3510, lng: 78.6400 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,10",
+    name: "Jabalpur Inn",
+    city: "Jabalpur",
+    rating: "4.3 (15K+)",
+    services: ["Bed", "Bath", "Room Service", "AC", "WiFi"],
+    price: 1600,
+    location: { lat: 23.1815, lng: 79.9864 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,11",
+    name: "Maple Grand",
+    city: "Bhopal",
+    rating: "4.6 (19K+)",
+    services: ["Bed", "Bath", "WiFi", "Parking", "Gym"],
+    price: 1950,
+    location: { lat: 23.2599, lng: 77.4126 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,12",
+    name: "City Light Hotel",
+    city: "Indore",
+    rating: "4.4 (17K+)",
+    services: ["Bed", "Bath", "Parking", "WiFi", "Restaurant"],
+    price: 1750,
+    location: { lat: 22.7196, lng: 75.8577 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,13",
+    name: "Amber Stay",
+    city: "Gwalior",
+    rating: "4.7 (20K+)",
+    services: ["Bed", "Bath", "AC", "Room Service", "Pool"],
+    price: 2150,
+    location: { lat: 26.2183, lng: 78.1828 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,14",
+    name: "Narmada Bliss",
+    city: "Jabalpur",
+    rating: "4.2 (15K+)",
+    services: ["Bed", "Bath", "WiFi", "Restaurant", "Spa"],
+    price: 1700,
+    location: { lat: 23.1815, lng: 79.9864 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,15",
+    name: "Vinayak Residency",
+    city: "Ujjain",
+    rating: "4.3 (16K+)",
+    services: ["Bed", "Bath", "AC", "Parking", "Gym"],
+    price: 1500,
+    location: { lat: 23.1793, lng: 75.7849 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,16",
+    name: "Lotus Heights",
+    city: "Nagpur",
+    rating: "4.5 (18K+)",
+    services: ["Bed", "Bath", "Parking", "WiFi", "Restaurant"],
+    price: 1800,
+    location: { lat: 21.1458, lng: 79.0882 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,17",
+    name: "Panna Residency",
+    city: "Panna",
+    rating: "4.6 (19K+)",
+    services: ["Bed", "Bath", "WiFi", "AC", "Pool"],
+    price: 2000,
+    location: { lat: 24.7220, lng: 80.1875 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,18",
+    name: "Wild Valley Resort",
+    city: "Pench",
+    rating: "4.8 (21K+)",
+    services: ["Bed", "Bath", "Parking", "Game Room", "Restaurant"],
+    price: 2100,
+    location: { lat: 21.7645, lng: 79.2987 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,19",
+    name: "Omkar Stay",
+    city: "Omkareshwar",
+    rating: "4.2 (14K+)",
+    services: ["Bed", "Bath", "WiFi", "Room Service", "AC"],
+    price: 1350,
+    location: { lat: 22.2413, lng: 76.1486 }
+  },
+  {
+    image: "https://source.unsplash.com/featured/?hotel,room,20",
+    name: "Orchha Palace",
+    city: "Orchha",
+    rating: "4.6 (18K+)",
+    services: ["Bed", "Bath", "Parking", "WiFi", "Restaurant"],
+    price: 1850,
+    location: { lat: 40.710048, lng: -79.965440 }
+  }
+];
+
+
+  var sum=''
+
+  hotels.forEach(function (elem) {
+  sum += `
+    <div class="h-[425px] w-[300px] bg-white shadow-lg ml-3 mt-[90px]">
+      <img src="${elem.image}" alt="" class="h-[20vw] w-full ">
+
+      <div class="flex items-center justify-evenly p-1">
+      
+        <a href="${elem.location}" class="no-underline">
+  <h1 class="font-extrabold font-serif text-1xl">${elem.name}</h1>
+</a>
+        <h4><i class="ri-star-fill text-yellow-400 text-1xl"></i>&nbsp;${elem.rating}</h4>
+      </div>
+
+      <div class="flex items-center justify-evenly p-1">
+        <i class="ri-hotel-bed-fill">&nbsp;${elem.services[0]}</i>
+        <i class="ri-showers-line">&nbsp;${elem.services[1]}</i>
+        <i class="ri-parking-box-fill">&nbsp;${elem.services[2]}</i>
+        <button class="bg-black h-7 w-7 rounded-3xl text-white text-[14px] text-center">+${elem.services.length - 3}</button>
+      </div>
+
+      <div class="flex items-center justify-evenly p-1 mt-[3px]">
+        <h1>₹${elem.price}/per night</h1>
+        <button class="bg-black h-[35px] w-[90px] text-white text-[14px] text-center hover:bg-red-500 hover:text-white">Book Now</button>
+      </div>
+    </div>
+  `;
+});
+
+  
+  var select=document.querySelector('#hotelContainer')
+  select.innerHTML=sum
+
+
+
+
+
+</script>
+</html>

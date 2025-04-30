@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travel Explorer</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .slider {
+      height: 90vh;
+      background-size: cover;
+      background-position: center;
+      animation: sliderAnim 16s infinite linear;
+    }
+    @keyframes sliderAnim {
+      0% { background-image: url('https://source.unsplash.com/1920x1080/?travel,nature'); }
+      25% { background-image: url('https://source.unsplash.com/1920x1080/?beach'); }
+      50% { background-image: url('https://source.unsplash.com/1920x1080/?mountain'); }
+      75% { background-image: url('https://source.unsplash.com/1920x1080/?city,skyline'); }
+      100% { background-image: url('https://source.unsplash.com/1920x1080/?travel,nature'); }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- ✅ Navbar (from Page 1) -->
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Travel Explorer</h1>
+    <ul class="flex gap-4">
+      <li><a href="#" class="hover:text-blue-500">Home</a></li>
+      <li><a href="#" class="hover:text-blue-500">Destinations</a></li>
+      <li><a href="#" class="hover:text-blue-500">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ✅ Slider Section (from Page 2) -->
+  <div class="slider flex items-center justify-center text-white text-4xl font-bold">
+    Explore India’s Finest Stays & Eateries
+  </div>
+
+  <!-- ✅ Hotel Cards Section -->
+  <section class="p-6 bg-gray-50">
+    <h2 class="text-2xl font-bold mb-4">Top Hotels</h2>
+    <div id="hotelContainer" class="flex flex-wrap justify-start gap-4"></div>
+  </section>
+
+  <!-- ✅ Restaurant Cards Section -->
+  <section class="p-6 bg-gray-50">
+    <h2 class="text-2xl font-bold mb-4">Popular Restaurants</h2>
+    <div id="hotelContainer2" class="flex flex-wrap justify-start gap-4"></div>
+  </section>
+
+  <!-- ✅ Destination Section (from Page 1) -->
+  <section class="p-6">
+    <h2 class="text-2xl font-bold mb-4">Explore by Destination</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white shadow-md p-4 text-center">Bhopal</div>
+      <div class="bg-white shadow-md p-4 text-center">Indore</div>
+      <div class="bg-white shadow-md p-4 text-center">Gwalior</div>
+      <div class="bg-white shadow-md p-4 text-center">Ujjain</div>
+    </div>
+  </section>
+
+  <!-- ✅ Footer (from Page 1) -->
+  <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+    &copy; 2025 Travel Explorer. All rights reserved.
+  </footer>
+
+  <!-- ✅ JavaScript to generate hotel and restaurant cards -->
+  <script>
+    const hotels = [
+      {
+        image: "https://pix8.agoda.net/hotelImages/9766179/-1/d4f43c4a3b97772267e55a71ff0c0d56.jpg?ca=9&ce=1&s=1024x",
+        name: "The Grand Residency",
+        city: "Bhopal",
+        rating: "4.5 (22K+)",
+        services: ["Bed", "Bath", "Parking", "WiFi", "AC"],
+        price: 1800,
+        location: { lat: 23.2599, lng: 77.4126 }
+      },
+      {
+        image: "https://img-cdn.thepublive.com/fit-in/1200x675/hospibuz/media/post_attachments/wp-content/uploads/2022/02/S-Cafe-2-Sheraton-Grand-Palace-Indore.jpeg",
+        name: "Indore Palace",
+        city: "Indore",
+        rating: "4.3 (18K+)",
+        services: ["Bed", "Bath", "Parking", "Gym", "Restaurant"],
+        price: 1600,
+        location: { lat: 22.7196, lng: 75.8577 }
+      },
+      {
+        image: "https://assets.simplotel.com/simplotel/image/upload/x_45,y_0,w_564,h_317,r_0,c_crop,q_80,fl_progressive/w_500,f_auto,c_fit/deo-bagh---17th-c-gwalior/View_Deo_Bagh_Gwalior_3_ngjts2",
+        name: "Royal Heritage",
+        city: "Gwalior",
+        rating: "4.7 (20K+)",
+        services: ["Bed", "Bath", "Parking", "Pool", "Spa"],
+        price: 2100,
+        location: { lat: 26.2183, lng: 78.1828 }
+      },
+      {
+        image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/505799485.jpg?k=2a40dbca123bb4dad7b51cbaa11cf01cd521444d16ae876f7c1a9dc9b78b7a5f&o=&hp=1",
+        name: "Ujjain Retreat",
+        city: "Ujjain",
+        rating: "4.2 (16K+)",
+        services: ["Bed", "Bath", "Parking", "WiFi", "Restaurant"],
+        price: 1400,
+        location: { lat: 23.1793, lng: 75.7849 }
+      },
+    ];
+
+    let hotelHTML = "";
+    hotels.forEach(hotel => {
+      hotelHTML += `
+        <div class="h-[425px] w-[300px] bg-white shadow-lg">
+          <img src="${hotel.image}" alt="${hotel.name}" class="h-[20vw] w-full object-cover">
+          <div class="flex items-center justify-between p-2">
+            <h1 class="font-bold text-lg">${hotel.name}</h1>
+            <h4><i class="ri-star-fill text-yellow-400"></i> ${hotel.rating}</h4>
+          </div>
+          <div class="flex justify-evenly p-2">
+            <span>${hotel.services[0]}</span>
+            <span>${hotel.services[1]}</span>
+            <span>${hotel.services[2]}</span>
+            <button class="bg-black text-white text-sm px-2 rounded-full">+${hotel.services.length - 3}</button>
+          </div>
+          <div class="flex items-center justify-between p-2">
+            <h1>₹${hotel.price}/night</h1>
+            <button class="bg-black text-white px-4 py-1 rounded hover:bg-red-500">Book</button>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById("hotelContainer").innerHTML = hotelHTML;
+
+    const restaurants = [
+      {
+        name: "Spice Kitchen",
+        city: "Bhopal",
+        rating: "4.5/5 (18K+)",
+        services: ["Indian Cuisine", "Breakfast, Lunch, Dinner", "Wi-Fi", "Live Music"],
+        price: 500,
+        image: "https://via.placeholder.com/300x200?text=Spice+Kitchen+Bhopal"
+      },
+      {
+        name: "Indore Diner",
+        city: "Indore",
+        rating: "4.7/5 (22K+)",
+        services: ["Mughlai", "Lunch, Dinner", "Wi-Fi", "Bar"],
+        price: 600,
+        image: "https://via.placeholder.com/300x200?text=Indore+Diner"
+      },
+      {
+        name: "Gwalior Heritage",
+        city: "Gwalior",
+        rating: "4.3/5 (15K+)",
+        services: ["North Indian", "All Meals", "Wi-Fi", "Conference Hall"],
+        price: 550,
+        image: "https://via.placeholder.com/300x200?text=Gwalior+Heritage"
+      },
+      {
+        name: "Ujjain Treats",
+        city: "Ujjain",
+        rating: "4.4/5 (17K+)",
+        services: ["Vegetarian", "Lunch", "Wi-Fi", "Takeaway"],
+        price: 300,
+        image: "https://via.placeholder.com/300x200?text=Ujjain+Treats"
+      }
+    ];
+
+    let restHTML = "";
+    restaurants.forEach(r => {
+      restHTML += `
+        <div class="h-[455px] w-[300px] bg-white shadow-lg">
+          <img src="${r.image}" alt="${r.name}" class="h-[20vw] w-full object-cover">
+          <div class="flex items-center justify-between p-2">
+            <h1 class="font-bold text-lg">${r.name}</h1>
+            <h4><i class="ri-star-fill text-yellow-400"></i> ${r.rating}</h4>
+          </div>
+          <div class="text-center text-sm">${r.services[0]}</div>
+          <div class="flex justify-evenly p-2">
+            <span>${r.services[1]}</span>
+            <span>${r.services[2]}</span>
+            <button class="bg-black text-white text-sm px-2 rounded-full">+${r.services.length - 3}</button>
+          </div>
+          <div class="flex items-center justify-between p-2">
+            <h1>₹${r.price}/person</h1>
+            <button class="bg-black text-white px-4 py-1 rounded hover:bg-red-500">Book</button>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById("hotelContainer2").innerHTML = restHTML;
+  </script>
+</body>
+</html>

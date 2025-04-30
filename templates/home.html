@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripMate</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <style>
+    @font-face {
+      font-family: 'bold';
+      src: url('fonts/bold.ttf') format('truetype');
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: #00000088 transparent;
+      margin: 0;
+      padding: 0;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #00000088;
+      border-radius: 12px;
+      border: 2px solid transparent;
+    }
+    @media (max-width: 768px) {
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Header Section -->
+<div class="bg-cover bg-center flex items-center justify-center h-screen w-screen bg-[url('../static/images/bg2.jpg')]">
+  <div class="h-[40vw] w-[90vw] p-[1vw] mt-8 mb-8 bg-cover bg-center bg-[url('../static/images/2.jpg')] p-4">
+    <div class="flex flex-wrap items-start justify-between">
+      <h1 class="text-white text-3xl font-serif">TripMate</h1>
+      <div class="flex flex-wrap items-center gap-6 text-sm text-white font-serif">
+        <a href="/hotel">Hotels</a>
+        <a href="/restaurant">Restaurants</a>
+        <a href="/gallery">Gallery</a>
+        <a href="/review">Review</a>
+
+        <!-- Login/Profile Dropdown -->
+        <div class="relative">
+          <button id="profileMenuButton" class="flex items-center focus:outline-none">
+            <i class="ri-account-circle-line text-3xl text-white"></i>
+          </button>
+          <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50">
+            {% if user.is_authenticated %}
+              <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">View Profile</a>
+              <a href="{% url 'logout' %}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+            {% else %}
+              <a href="{% url 'signup' %}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Create Account</a>
+              <a href="{% url 'login' %}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Login</a>
+            {% endif %}
+          </div>
+        </div>
+
+        <button class="h-10 px-5 bg-white text-black rounded-xl hover:bg-black hover:text-white" onclick="window.location.href='plan'">Plan a Trip</button>
+      </div>
+    </div>
+
+    <div class="text-center mt-8 mb-6">
+      <h4 class="text-5xl mt-[5vw] font-serif font-extrabold text-white drop-shadow">Welcome to TripMate</h4>
+      <p class="text-xl mt-[1vw] mb-[7vw] text-white font-serif">Where Every Trip Feels Effortless</p>
+    </div>
+
+    <div class="mt-[2vw] mx-auto flex flex-wrap justify-center items-center gap-4 bg-white shadow-lg rounded-2xl p-4 w-[89vw] max-w-[1000px]">
+
+      <form method="POST" action="{% url 'trip' %}" class="flex flex-wrap gap-4 items-center justify-center" id="home-trip-form">
+  {% csrf_token %}
+
+  <!-- Destination -->
+  <div class="flex items-center gap-2 bg-gray-200 rounded-xl px-4 py-2 w-[200px]">
+    <i class="ri-map-pin-line text-gray-700 text-xl"></i>
+    <select name="city" id="city" class="bg-transparent w-full outline-none text-gray-800" required>
+      <option value="" disabled selected>Select City</option>
+      <option value="Bhopal">Bhopal</option>
+      <option value="Indore">Indore</option>
+      <option value="Ujjain">Ujjain</option>
+      <option value="Nagpur">Nagpur</option>
+      <option value="Panna">Panna</option>
+      <option value="Jabalpur">Jabalpur</option>
+      <option value="Gwalior">Gwalior</option>
+    </select>
+  </div>
+
+  <!-- Check-In Date -->
+  <div class="flex items-center gap-2 bg-gray-200 rounded-xl px-4 py-2 w-[200px]">
+    <i class="ri-calendar-check-line text-gray-700 text-xl"></i>
+    <input type="date" id="checkin" class="bg-transparent w-full outline-none text-gray-800" required />
+  </div>
+
+  <!-- Check-Out Date -->
+  <div class="flex items-center gap-2 bg-gray-200 rounded-xl px-4 py-2 w-[200px]">
+    <i class="ri-calendar-event-line text-gray-700 text-xl"></i>
+    <input type="date" id="checkout" class="bg-transparent w-full outline-none text-gray-800" required />
+  </div>
+
+  <!-- Persons -->
+  <div class="flex items-center gap-2 bg-gray-200 rounded-xl px-4 py-2 w-[160px]">
+    <i class="ri-user-line text-gray-700 text-xl"></i>
+    <select name="people" class="bg-transparent w-full outline-none text-gray-800">
+      <option value="1">1 Person</option>
+      <option value="2">2 Persons</option>
+      <option value="3">3 Persons</option>
+      <option value="4">4+ Persons</option>
+    </select>
+  </div>
+
+  <!-- Hidden field to hold calculated number of days -->
+  <input type="hidden" name="days" id="days" />
+
+  <!-- Plan Button -->
+  <button type="submit" class="bg-black text-white px-6 py-2 rounded-xl hover:bg-white hover:text-black border border-black transition-all duration-200">
+    Plan
+  </button>
+</form>
+
+    </div>
+
+    <div class="flex justify-center mt-8">
+      <button id="btn1" class="mt-[5vw] text-white text-lg bg-black px-5 py-2 rounded border border-white font-serif">
+        Explore <i class="ri-arrow-down-s-fill"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Places Section -->
+<div class="h-[60vw] w-full bg-white">
+  <h4 class="pt-[5vw] pl-[2vw] pr-[2vw] text-[1.5vw] text-black-100 font-serif">Best location</h4>
+
+  <h1 class="pl-[2vw] pr-[2vw] text-[3vw] font-extrabold">
+    Place to visit
+    <p class="text-gray-400 pb-[2vw] ml-[60vw] text-[1.0vw]">
+      There are many ancient temples to explore.<br>
+      You can visit historical forts and monuments.<br>
+      Beautiful lakes offer calm and relaxation.
+    </p>
+  </h1>
+
+        <!-- Slider Section -->
+        <div id="cls" class="ml-50 rounded-xl transition-opacity duration-700 opacity-100 h-120 w-290 flex items-center justify-between bg-[url('https://images.unsplash.com/photo-1485470733090-0aae1788d5af?q=80&w=2117&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center text-white text-6xl">
+            <i id="fb" class="ri-arrow-left-s-line"></i>
+            <i id="pr" class="ri-arrow-right-s-line"></i>
+        </div>
+
+    <button id="prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-3 py-2 rounded-full hover:bg-opacity-80">
+      <i class="ri-arrow-left-s-line text-2xl"></i>
+    </button>
+    <button id="next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white px-3 py-2 rounded-full hover:bg-opacity-80">
+      <i class="ri-arrow-right-s-line text-2xl"></i>
+    </button>
+  </div>
+</div>
+
+<div class="mt-12 mb-20 px-6">
+  <h2 class="text-3xl font-bold text-center mb-8 font-serif">Gallery Highlights</h2>
+  <div id="galleryCarousel" class="flex overflow-x-auto space-x-6 pb-4">
+    {% for image in gallery_images %}
+      <a href="gallery/">
+        <img src="media/gallery/{{ image }}" class="w-64 h-48 object-cover rounded-lg cursor-pointer" />
+      </a>
+    {% empty %}
+      <p>No images available.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-black text-white text-center p-6 mt-12">
+  <div class="flex flex-wrap justify-center gap-8">
+    <a href="about/" class="hover:underline">About Us</a>
+    <a href="contact/" class="hover:underline">Contact Us</a>
+    <a href="terms/" class="hover:underline">Terms & Conditions</a>
+    <a href="help/" class="hover:underline">Help Center</a>
+  </div>
+  <p class="text-gray-400 mt-4">&copy; 2025 TripMate. All Rights Reserved.</p>
+</footer>
+
+<!-- JS Scripts -->
+<script>
+const profileBtn = document.getElementById('profileMenuButton');
+const profileDropdown = document.getElementById('profileDropdown');
+
+profileBtn.addEventListener('click', () => {
+  profileDropdown.classList.toggle('hidden');
+});
+
+window.addEventListener('click', function(e) {
+  if (!profileBtn.contains(e.target)) {
+    profileDropdown.classList.add('hidden');
+  }
+});
+
+const slider = document.getElementById('slider');
+const slides = document.querySelectorAll('#slider > div');
+const totalSlides = slides.length;
+let index = 0;
+
+document.getElementById('next').addEventListener('click', () => {
+  index = (index + 1) % totalSlides;
+  slider.style.transform = `translateX(-${index * 100}%)`;
+});
+
+document.getElementById('prev').addEventListener('click', () => {
+  index = (index - 1 + totalSlides) % totalSlides;
+  slider.style.transform = `translateX(-${index * 100}%)`;
+});
+
+setInterval(() => {
+  index = (index + 1) % totalSlides;
+  slider.style.transform = `translateX(-${index * 100}%)`;
+}, 10000);
+
+document.getElementById('btn1').addEventListener('click', function() {
+  const scrollAmount = window.innerHeight;
+  window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+});
+
+const form = document.getElementById('home-trip-form');
+const checkin = document.getElementById('checkin');
+const checkout = document.getElementById('checkout');
+const daysField = document.getElementById('days');
+
+if (form) {
+  form.addEventListener('submit', function (e) {
+    const checkinDate = new Date(checkin.value);
+    const checkoutDate = new Date(checkout.value);
+
+    if (checkinDate && checkoutDate && checkoutDate > checkinDate) {
+      const timeDifference = checkoutDate - checkinDate;
+      const dayCount = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      daysField.value = dayCount;
+    } else {
+      e.preventDefault();
+      alert('Please select a valid Check-In and Check-Out date.');
+    }
+  });
+}
+
+</script>
+</body>
+</html>

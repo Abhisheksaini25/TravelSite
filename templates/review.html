@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rating & Review</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    .pop { transform: scale(1.3); transition: transform 0.2s; }
+    .img-preview { max-height: 80px; max-width: 80px; margin-top: 5px; border-radius: 0.5rem; }
+    .time { font-size: 0.9rem; color: gray; }
+    .like-dislike-btn:focus {
+      outline: none;
+      background-color: #3b82f6;
+      color: white;
+    }
+    .like-dislike-btn:active {
+      background-color: #2563eb;
+    }
+    .like-dislike-btn {
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .liked {
+      color: #3b82f6;
+    }
+    .disliked {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 ">
+<a href="/" class="absolute left-5 top-10 bg-black text-white px-4 py-2 rounded hover:bg-red-500 transition-all">Home</a>
+  <h1 class="font-extrabold text-4xl mb-7 text-center pt-5">Rating & Review</h1>
+  <h1 class="border-b w-full border-[1px] border-black mb-5"></h1>
+
+  
+  <div class="flex justify-center mb-5">
+    <button onclick="toggleAddCommentBox()" class="bg-black text-white rounded-3xl px-4 py-2 hover:bg-gray-800 transition">
+      <i class="ri-chat-1-line"></i>&nbsp;Add Comment
+    </button>
+  </div>
+
+  
+  <div id="commentInputBox" class="hidden flex gap-3 mb-5 justify-center">
+    <input id="commentInput" type="text" placeholder="Write a comment..." class="border border-black rounded-md p-2 w-[35%] text-black">
+    <input type="file" id="commentImage" accept="image/*" class="p-1">
+    <button onclick="addComment()" class="bg-black text-white rounded-3xl px-4 py-2 hover:bg-gray-800 transition">
+      <i class="ri-chat-1-line"></i>&nbsp;Send Comment
+    </button>
+  </div>
+
+  <div id="review" class="ml-12 flex-wrap justify-center gap-5 pt-10 pb-10">
+
+    <div class="h-auto w-[90vw]  p-5">
+      
+      
+      <div id="commentSection" class="space-y-5"></div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleAddCommentBox() {
+      document.getElementById('commentInputBox').classList.toggle('hidden');
+    }
+
+    function addComment(parentDiv = null) {
+      const input = parentDiv 
+        ? parentDiv.querySelector('.replyInput') 
+        : document.getElementById('commentInput');
+      const imageInput = document.getElementById('commentImage');
+      const text = input.value.trim();
+      if (text === "") return;
+
+      const commentDiv = document.createElement('div');
+      commentDiv.className = "border border-black rounded-lg p-3 bg-white";
+
+      const timestamp = new Date();
+      const dateString = timestamp.toLocaleString();
+
+      let imgHTML = "";
+      if (!parentDiv && imageInput.files.length > 0) {
+        const imgURL = URL.createObjectURL(imageInput.files[0]);
+        imgHTML = `<img src="${imgURL}" class="img-preview">`;
+      }
+
+      commentDiv.innerHTML = `
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="profile" class="h-8 w-8 rounded-full">
+            <p class="font-bold">Anuj</p>
+          </div>
+          <span class="text-gray-400 text-xs time">${dateString}</span>
+        </div>
+        <p class="mb-2">${text}</p>
+        ${imgHTML}
+        <div class="flex gap-4 items-center text-xl mt-2 mb-3">
+          <button class="like-dislike-btn likeBtn">
+            <i class="ri-thumb-up-line"></i> Like
+          </button>
+          <button class="like-dislike-btn dislikeBtn">
+            <i class="ri-thumb-down-line"></i> Dislike
+          </button>
+          <button class="text-sm px-3 py-1 bg-black text-white rounded replyBtn">Reply</button>
+          <button class="text-sm px-3 py-1 bg-red-600 text-white rounded deleteBtn">Delete</button>
+        </div>
+        <div class="replyBox hidden flex gap-2 mb-3">
+          <input type="text" placeholder="Write a reply..." class="border border-black rounded replyInput p-1 text-black">
+          <button class="px-3 py-1 bg-black text-white rounded sendReplyBtn">Send Reply</button>
+        </div>
+        <div class="nestedReplies space-y-3 ml-6 mt-3"></div>
+      `;
+
+      const section = parentDiv 
+        ? parentDiv.querySelector('.nestedReplies') 
+        : document.getElementById('commentSection');
+      section.appendChild(commentDiv);
+
+      input.value = "";
+      if (!parentDiv) imageInput.value = "";
+
+      const likeBtn = commentDiv.querySelector('.likeBtn');
+      const dislikeBtn = commentDiv.querySelector('.dislikeBtn');
+
+      likeBtn.addEventListener('click', () => toggleLikeDislike(likeBtn, dislikeBtn, 'like'));
+      dislikeBtn.addEventListener('click', () => toggleLikeDislike(likeBtn, dislikeBtn, 'dislike'));
+
+      commentDiv.querySelector('.replyBtn').addEventListener('click', () => {
+        commentDiv.querySelector('.replyBox').classList.toggle('hidden');
+      });
+
+      commentDiv.querySelector('.sendReplyBtn').addEventListener('click', () => {
+        addComment(commentDiv);
+      });
+
+      commentDiv.querySelector('.deleteBtn').addEventListener('click', () => {
+        commentDiv.remove();
+      });
+    }
+
+    function toggleLikeDislike(likeBtn, dislikeBtn, action) {
+      if (action === 'like') {
+        likeBtn.classList.toggle('liked');
+        dislikeBtn.classList.remove('disliked');
+      } else if (action === 'dislike') {
+        dislikeBtn.classList.toggle('disliked');
+        likeBtn.classList.remove('liked');
+      }
+    }
+  </script>
+
+</body>
+</html>

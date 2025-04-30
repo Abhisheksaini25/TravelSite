@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+  <h1 class="font-extrabold text-4xl mb-6 text-center pt-10">Gallery</h1>
+  <h1 class="border-b border-[1px] mb-4 border-black"></h1>
+  <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-1">
+    
+  </div>
+
+  <script>
+    const destinations = [
+  {
+    name: "Upper Lake",
+    city: "Bhopal",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/4c/0d/7a/caption.jpg?w=1400&h=800&s=1"
+  },
+  {
+    name: "Taj-ul-Masajid",
+    city: "Bhopal",
+    image: "https://media.istockphoto.com/id/469917386/photo/taj-ul-masajid-mosque.jpg?s=2048x2048&w=is&k=20&c=8mfsfAP4CJjoZrPTBxegZGEL8RdHGsqrFe37q5moiWk="
+  },
+  {
+    name: "Sair Sapata",
+    city: "Bhopal",
+    image: "https://media-cdn.tripadvisor.com/media/photo-s/0e/15/cd/fa/photo1jpg.jpg"
+  },
+  {
+    name: "Kanha Museum of Life & Art",
+    city: "Bhopal",
+    image: "https://singinawajunglelodge.com/wp-content/uploads/2024/12/11-3-1536x1023-1.webp"
+  },
+  {
+    name: "Rajwada Palace",
+    city: "Indore",
+    image: "https://t3.ftcdn.net/jpg/01/13/01/70/240_F_113017086_PtETiC3OfSiiAfK9q8egOlvdjmwORkBh.jpg"
+  },
+  {
+    name: "Sarafa Bazaar",
+    city: "Indore",
+    image: "https://media.istockphoto.com/id/2075247141/photo/indore-sarafa-bazaar-indias-midnight-food-capital-of-madhya-pradesh-taste-of-india.jpg?s=612x612&w=0&k=20&c=LDrxD9ASPIa7zeHYn2o4aLO27Im_bi_SgRS3q5ddK_E="
+  },
+  {
+    name: "Patalpani Waterfall",
+    city: "Indore",
+    image: "https://www.shutterstock.com/shutterstock/photos/1541776373/display_1500/stock-photo-the-patalpani-waterfall-is-located-near-mhow-of-madhya-pradesh-india-the-waterfall-is-1541776373.jpg"
+  },
+  {
+    name: "Lal Bagh Palace",
+    city: "Indore",
+    image: "https://www.shutterstock.com/shutterstock/photos/522994939/display_1500/stock-photo-indore-madhya-pradesh-india-october-the-lal-bagh-palace-built-between-is-522994939.jpg"
+  },
+  {
+    name: "Gwalior Fort",
+    city: "Gwalior",
+    image: "https://media.istockphoto.com/id/481494314/photo/gwalior-fort.jpg?s=612x612&w=0&k=20&c=Jb2GScmEwEwP0FplZswTCa4kmGUqOExjcWFY5H3vT4c="
+  },
+  {
+    name: "Jai Vilas Palace",
+    city: "Gwalior",
+    image: "https://media.gettyimages.com/id/481173030/photo/gwalior-madhya-pradesh-india-the-durbar-hall-inside-the-jai-vilas-palace-the-jai-vilas-mahal.jpg?s=612x612&w=0&k=20&c=shB8r_ie2sHySI7-AX7quLcqUnnZd_cH-bImAueR4Wk="
+  },
+  {
+    name: "Sas Bahu Temple",
+    city: "Gwalior",
+    image: "https://media.gettyimages.com/id/586118092/photo/sas-bahu-temples-temple-district-of-nagda-udaipur-rajasthan-india.jpg?s=612x612&w=0&k=20&c=WdgnggZcv4R2T_L6CuQrB7qLFubOzrqiYIMROlADjoM="
+  },
+  {
+    name: "Sun Temple",
+    city: "Gwalior",
+    image: "https://www.worldhistory.org/img/r/p/1500x1500/5256.jpg"
+  },
+  {
+    name: "Mahakaleshwar Jyotirlinga",
+    city: "Ujjain",
+    image: "https://i.pinimg.com/736x/94/50/35/945035d7744e0f5a1b23f334c2a5fd51.jpg"
+  },
+  {
+    name: "Ram Ghat",
+    city: "Ujjain",
+    image: "https://t4.ftcdn.net/jpg/03/70/71/69/240_F_370716921_8sdvA1TRJ9D1eSn8M3nlOjlenjIigbJe.jpg"
+  },
+  {
+    name: "Kaal Bhairav Temple",
+    city: "Ujjain",
+    image: "https://lh3.googleusercontent.com/gps-cs-s/AB5caB9mpMjtlH0qkVlRNDUm7av6D0X0mBik8BukZ0J0o8OD-VavKXOgALWjF3tAxXfMob9JgatWImFFTrtyEIQHmuL1T9RvRNefOFD0ZkcXYIMSP5MdKbRLNbUMLGsZxCYuOW7ptOs=s1360-w1360-h1020"
+  },
+  {
+    name: "Zero Mile Stone",
+    city: "Nagpur",
+    image: "https://www.shutterstock.com/shutterstock/photos/726231838/display_1500/stock-photo-nagpur-maharashtra-india-december-zero-mile-stone-is-a-monument-locating-the-726231838.jpg"
+  },
+  {
+    name: "Deekshabhoomi",
+    city: "Nagpur",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Deekshabhoomi_-_panoramio.jpg/500px-Deekshabhoomi_-_panoramio.jpg"
+  },
+  {
+    name: "Ambazari Lake",
+    city: "Nagpur",
+    image: "https://s7ap1.scene7.com/is/image/incredibleindia/ambazari-lake-&-garden-nagpur-maharashtra-1-attr-hero?qlt=82&ts=1726669733157"
+  },
+  {
+    name: "Pench National Park",
+    city: "Pench",
+    image: "https://www.madhyapradeshdmc.com/images/pench-national-park.webp"
+  },
+  {
+    name: "Raneh Falls",
+    city: "Panna",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/cc/e5/05/beautiful-khajuraho.jpg?w=900&h=500&s=1"
+  },
+  {
+    name: "Panna National Park",
+    city: "Panna",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-YeZF3Qq0odt6RCqPlT-_L7qeDN5qoolSiw&s"
+  },
+  {
+    name: "Omkareshwar Jyotirlinga",
+    city: "Omkareshwar",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVvEncgoGKw9blM5bAU6l4medieSM6s5gtaQ&s"
+  },
+  {
+    name: "Orchha Fort",
+    city: "Orchha",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/9a/3c/1d/caption.jpg?w=900&h=500&s=1"
+  },
+  {
+    name: "Chaturbhuj Temple",
+    city: "Orchha",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAa0U1UNvBqjjCqlQoRELuHOHhFk6jf1Efzg&s"
+  },
+  {
+    name: "Jahangir Mahal",
+    city: "Orchha",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Jehangir_Mahal_Agra_Fort_1.jpg/1200px-Jehangir_Mahal_Agra_Fort_1.jpg"
+  },
+  {
+    name: "Bhedaghat Marble Rocks",
+    city: "Jabalpur",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGxI2GZNkCGhh1adE9oHgPEpjUiV-Yw3pRZg&s"
+  },
+  {
+    name: "Dhuandhar Falls",
+    city: "Jabalpur",
+    image: "https://i.ytimg.com/vi/rqd1DKpeDEQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB8uNW8x9FVFIWx7iqEQYScTP8nkw"
+  },
+  {
+    name: "Madan Mahal Fort",
+    city: "Jabalpur",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYj83XhOoWK9NhjzPhsvDe9NVEb2UpAAb4VA&s"
+  },
+  {
+    name: "Balancing Rock",
+    city: "Jabalpur",
+    image: "https://www.uncovercolorado.com/wp-content/uploads/2021/10/Balanced-Rock-Colorado-Top-1600x800-1.jpg"
+  },
+  {
+    name: "Pisanhari ki Madiya",
+    city: "Jabalpur",
+    image: "https://hindi.cdn.zeenews.com/hindi/sites/default/files/2024/11/17/3419502-pisanhari-ki-madiya-3.jpeg"
+  }
+];
+
+    const gallery = document.querySelector("#gallery");
+    let content = '';
+
+    destinations.forEach(dest => {
+      content += `
+        <div class="">
+          <img src="${dest.image}" class="rounded-md h-48 w-full object-cover mb-3">
+          
+        </div>
+      `;
+    });
+
+    gallery.innerHTML = content;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Profile</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f4f8fc;
+      margin: 0;
+      padding: 0;
+    }
+    .profile-container {
+      max-width: 500px;
+      margin: 4rem auto;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      text-align: center;
+    }
+    .back-link {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 1rem auto;
+      display: block;
+      border: 3px solid #000;
+    }
+    h2 {
+      color: #000;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    .btn {
+      background: #000;
+      color: #fff;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background: #222;
+    }
+    .change-password-container {
+      margin-top: 2rem;
+      display: none;
+      text-align: left;
+    }
+    .input-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 0.8rem 3rem 0.8rem 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .input-group button.eye-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #333;
+    }
+    #alert {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #000;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="profile-container">
+  <a href="{% url 'home' %}" class="back-link">← Back to Home</a>
+
+  <img src="/static/img/ng14.jpeg" alt="User Photo" class="profile-pic">
+  <h2>{{ user.username }}</h2>
+  <p>{{ user.email }}</p>
+
+  <button class="btn" onclick="toggleChangePassword()">Change Password</button>
+
+  <div class="change-password-container" id="change-password-container">
+    <form id="change-password-form">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="password" id="new_password1" name="new_password1" placeholder="New Password" required>
+        <button type="button" class="eye-btn" onclick="togglePassword('new_password1', this)">👁️</button>
+      </div>
+      <div class="input-group">
+        <input type="password" id="new_password2" name="new_password2" placeholder="Confirm New Password" required>
+        <button type="button" class="eye-btn" onclick="togglePassword('new_password2', this)">👁️</button>
+      </div>
+      <button type="submit" class="btn" style="width: 100%;">Update Password</button>
+    </form>
+  </div>
+</div>
+
+<div id="alert">
+  <span id="alert-message"></span>
+</div>
+
+<script>
+function toggleChangePassword() {
+  const container = document.getElementById('change-password-container');
+  container.style.display = container.style.display === 'block' ? 'none' : 'block';
+}
+
+function togglePassword(inputId, button) {
+  const input = document.getElementById(inputId);
+  if (input.type === "password") {
+    input.type = "text";
+    button.textContent = "🙈";
+  } else {
+    input.type = "password";
+    button.textContent = "👁️";
+  }
+}
+
+function showAlert(message, isSuccess = true) {
+  const alertBox = document.getElementById('alert');
+  const alertMessage = document.getElementById('alert-message');
+  alertMessage.innerText = message;
+  alertBox.style.background = isSuccess ? "#4CAF50" : "#f44336";
+  alertBox.style.display = 'block';
+  setTimeout(() => {
+    alertBox.style.display = 'none';
+  }, 3000);
+}
+
+document.getElementById('change-password-form').addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  const newPassword1 = document.getElementById('new_password1').value;
+  const newPassword2 = document.getElementById('new_password2').value;
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+  const response = await fetch("{% url 'change_password' %}", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': csrfToken,
+    },
+    body: `new_password1=${encodeURIComponent(newPassword1)}&new_password2=${encodeURIComponent(newPassword2)}`
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data.success) {
+      showAlert('Password updated successfully!');
+      setTimeout(() => {
+        window.location.href = "{% url 'home' %}";
+      }, 1500);
+    } else {
+      showAlert(data.error, false);
+    }
+  } else {
+    showAlert('Something went wrong. Please try again.', false);
+  }
+});
+</script>
+
+</body>
+</html>

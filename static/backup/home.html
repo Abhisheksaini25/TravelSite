@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Planner</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #cfe9ff, #dcc9ff);
+      text-align: center;
+      padding: 0;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar .site-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .navbar .menu {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .navbar .menu a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .navbar .menu a:hover {
+      color: #007bff;
+    }
+    .navbar .plan-btn {
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .navbar .plan-btn:hover {
+      background-color: #0056b3;
+    }
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .user-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #007bff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 80px);
+      padding: 2rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      color: #333;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 600px;
+      margin: 1rem auto;
+    }
+    .hero .btn {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .hero .btn:hover {
+      background-color: #0056b3;
+    }
+    .gallery {
+      margin: 3rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      max-width: 800px;
+      width: 100%;
+      padding: 0 1rem;
+    }
+    .gallery img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    .user-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: auto;
+}
+
+.user-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-menu a, .dropdown-menu p {
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="site-name">TravelSite</div>
+    <div class="menu">
+      <a href="#places">Places</a>
+      <a href="/hotel">Hotels</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About Us</a>
+      <button class="plan-btn" onclick="startPlanning()">Plan a Trip</button>
+      <div class="user-dropdown">
+  <div class="user-icon" onclick="toggleDropdown()">
+    <img src="/static/img/ng14.jpeg" alt="User" />
+  </div>
+  <div class="dropdown-menu" id="userDropdown">
+    {% if user.is_authenticated %}
+      <p>Hello, {{ user.username }}</p>
+      <a href="/profile">View Profile</a>
+      <a href="/logout">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'signup' %}">Create Account</a>
+    {% endif %}
+  </div>
+</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Discover Your Next Adventure</h1>
+    <p>
+      Plan personalized trips with ease. Choose your destination, travel theme, and duration to create unforgettable experiences.
+    </p>
+    <button class="btn" onclick="startPlanning()">Start Planning</button>
+  </div>
+
+  <div class="gallery">
+    <img src="../static/backup/images/paris.jpg" alt="Paris" />
+    <img src="../static/backup/images/rome.jpg" alt="Rome" />
+    <img src="../static/backup/images/tokyo.jpg" alt="Tokyo" />
+    <img src="../static/backup/images/nature.jpg" alt="Nature" />
+  </div>
+
+  <script>
+    function startPlanning() {
+      window.location.href = '/plan';
+    }
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById("userDropdown");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.closest('.user-dropdown')) {
+        const dropdown = document.getElementById("userDropdown");
+        if (dropdown) dropdown.style.display = "none";
+      }
+    };
+  </script>
+</body>
+</html>

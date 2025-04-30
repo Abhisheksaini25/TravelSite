@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Trip Plan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #f4f8fc;
+    }
+    h1 {
+      text-align: center;
+      color: #007bff;
+    }
+    .city-heading {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #333;
+    }
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background-color: #007bff;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      margin: 2rem 0;
+    }
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    .timeline-content, .timeline-image {
+      width: 45%;
+      position: relative;
+    }
+    .timeline-content {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .timeline-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .timeline-dot {
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border: 4px solid #007bff;
+      border-radius: 50%;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+    .timeline-content h2 {
+      margin-top: 0;
+      color: #007bff;
+    }
+    .timeline-content p {
+      margin: 0;
+      color: #555;
+    }
+    @media screen and (max-width: 768px) {
+      .timeline::before {
+        left: 15px;
+      }
+      .timeline-item {
+        flex-direction: column !important;
+        align-items: flex-start;
+      }
+      .timeline-content, .timeline-image {
+        width: 100%;
+        margin-left: 2.5rem;
+      }
+      .timeline-dot {
+        left: 15px;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Travel Plan</h1>
+  <div class="city-heading">Trip to <span>{{ city }}</span></div>
+
+  <div class="timeline">
+    {% for day in days %}
+    <div class="timeline-item {% if forloop.counter|divisibleby:2 %}timeline-item-even{% endif %}">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h2>Day {{ day }}</h2>
+        <p>Explore top attractions, enjoy local cuisine, and discover hidden gems in {{ city }}.</p>
+      </div>
+      <div class="timeline-image">
+        <img id = image, src="../static/avi/bpl{{ day }}.jpg">
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+<div style="text-align: center; margin: 1rem 0;">
+  <button onclick="downloadPDF()" style="padding: 0.5rem 1rem; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    Download Plan as PDF
+  </button>
+</div>
+  <br>
+  <div class="button-container">
+  <button class="action-button">Hotels</button>
+  <button class="action-button">Restaurants</button>
+</div>
+<!-- Load html2pdf.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+  function downloadPDF() {
+    const element = document.body; // or document.getElementById('plan-container') if you want only the plan part
+    const opt = {
+      margin:       0.5,
+      filename:     `Travel_Plan_${{  city }}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
+  }
+</script>
+
+</body>
+</html>
+

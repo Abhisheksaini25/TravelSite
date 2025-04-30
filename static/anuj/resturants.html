@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+   
+    <h1 class="font-extrabold text-4xl mb-3 text-center pt-10 ">Restaurants</h1>
+    <h1 class="border-b border-[1px] border-black"></h1>
+     <div id="hotelContainer" class=" flex flex-wrap justify-center gap-5 pt-10 pb-10">
+    <div  class="h-[500px] w-[400px] bg-white shadow-lg ml-3 mt-[80px] mb-[10px]">
+        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/5d/f3/00/caption.jpg?w=500&h=500&s=1" alt="" class="h-[20vw] w-full ">
+         
+        <div class="flex items-center justify-evenly p-1">
+            <h1 class="font-extrabold font-serif text-1xl ">Hotel mehgdodh</h1>
+             <h4><i class="ri-star-fill text-yellow-400 text-1xl "></i>&nbsp;4.9</h4>
+        </div>
+        <div class="items-center justify-evenly p-1">
+            <i class=""style="text-[2px];">Bed</i>
+            <i class="">Bath</i>
+            <i class="">Parking</i>
+            <button class="bg-black h-7 w-7 rounded-3xl text-white text-[14px] text-center">+3</button>
+        </div>
+
+        <div class="flex items-center justify-evenly p-1 mt-[3px] ">
+            <h1>₹500/per person</h1>
+            <button class="bg-black h-[35px] w-[90px]  text-white text-[14px] text-center hover:bg-red-500 hover:text-white">Book Now</button>
+             
+        </div>
+        
+    </div>
+     
+      </div>
+    
+     
+
+
+    
+    
+</body>
+<script>
+    
+   const restaurants = [
+  {
+    name: "Spice Kitchen",
+    city: "Bhopal",
+    rating: "4.5/5 (18K+)",
+    services: [
+      "Indian Cuisine", 
+      "Breakfast, Lunch, Dinner", 
+      "Wi-Fi", 
+      "Live Music", 
+      "Outdoor Seating", 
+      "Parking", 
+      "Pet Friendly"
+    ],
+    price: 500,
+    image: "https://via.placeholder.com/300x200?text=Spice+Kitchen+Bhopal",
+    tags: ["Family-Friendly", "Delivery Available"]
+  },
+  {
+    name: "Indore Diner",
+    city: "Indore",
+    rating: "4.7/5 (22K+)",
+    services: [
+      "Mughlai Cuisine", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Home Delivery", 
+      "Bar", 
+      "Air Conditioning"
+    ],
+    price: 600,
+    image: "https://via.placeholder.com/300x200?text=Indore+Diner",
+    tags: ["Pet Friendly", "Takeaway Available"]
+  },
+  {
+    name: "Gwalior Heritage",
+    city: "Gwalior",
+    rating: "4.3/5 (15K+)",
+    services: [
+      "North Indian", 
+      "Breakfast, Lunch, Dinner", 
+      "Wi-Fi", 
+      "Live Sports", 
+      "Conference Hall", 
+      "Outdoor Seating"
+    ],
+    price: 550,
+    image: "https://via.placeholder.com/300x200?text=Gwalior+Heritage",
+    tags: ["Romantic", "Valet Parking"]
+  },
+  {
+    name: "Ujjain Treats",
+    city: "Ujjain",
+    rating: "4.4/5 (17K+)",
+    services: [
+      "Vegetarian Cuisine", 
+      "Breakfast, Lunch", 
+      "Wi-Fi", 
+      "Chill Vibes", 
+      "Takeaway", 
+      "Family Friendly"
+    ],
+    price: 300,
+    image: "https://via.placeholder.com/300x200?text=Ujjain+Treats",
+    tags: ["Budget Friendly", "Vegetarian Only"]
+  },
+  {
+    name: "Nagpur Spice Hub",
+    city: "Nagpur",
+    rating: "4.6/5 (19K+)",
+    services: [
+      "Chinese Cuisine", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Parking", 
+      "Live Music", 
+      "Open Kitchen", 
+      "Buffet"
+    ],
+    price: 700,
+    image: "https://via.placeholder.com/300x200?text=Nagpur+Spice+Hub",
+    tags: ["Business Lunch", "Buffet Available"]
+  },
+  {
+    name: "Panna Feast",
+    city: "Panna",
+    rating: "4.2/5 (13K+)",
+    services: [
+      "Continental Cuisine", 
+      "Dinner", 
+      "Wi-Fi", 
+      "Valet Parking", 
+      "Bar", 
+      "Seafood"
+    ],
+    price: 800,
+    image: "https://via.placeholder.com/300x200?text=Panna+Feast",
+    tags: ["Romantic Dinner", "Fine Dining"]
+  },
+  {
+    name: "Pench Grill",
+    city: "Pench",
+    rating: "4.3/5 (14K+)",
+    services: [
+      "BBQ", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Outdoor Seating", 
+      "Bonfire", 
+      "Scenic Views"
+    ],
+    price: 600,
+    image: "https://via.placeholder.com/300x200?text=Pench+Grill",
+    tags: ["Adventure", "Pet Friendly"]
+  },
+  {
+    name: "Omkareshwar Eats",
+    city: "Omkareshwar",
+    rating: "4.5/5 (15K+)",
+    services: [
+      "Indian Cuisine", 
+      "Breakfast, Lunch, Dinner", 
+      "Wi-Fi", 
+      "Traditional Decor", 
+      "River Views"
+    ],
+    price: 400,
+    image: "https://via.placeholder.com/300x200?text=Omkareshwar+Eats",
+    tags: ["Spiritual Retreat", "Outdoor Seating"]
+  },
+  {
+    name: " Palace Restaurant",
+    city: "Orchha",
+    rating: "4.6/5 (16K+)",
+    services: [
+      "Royal Indian Cuisine", 
+      "Breakfast, Lunch, Dinner", 
+      "Wi-Fi", 
+      "Heritage Experience", 
+      "Outdoor Seating"
+    ],
+    price: 900,
+    image: "https://via.placeholder.com/300x200?text=Orchha+Palace+Restaurant",
+    tags: ["Luxury Dining", "Heritage Experience"]
+  },
+  {
+    name: "Jabalpur Treats",
+    city: "Jabalpur",
+    rating: "4.7/5 (20K+)",
+    services: [
+      "Indian", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Family Friendly", 
+      "Valet Parking", 
+      "Bar"
+    ],
+    price: 500,
+    image: "https://via.placeholder.com/300x200?text=Jabalpur+Treats",
+    tags: ["Casual Dining", "Live Music"]
+  },
+  {
+    name: "Bhopal Delight",
+    city: "Bhopal",
+    rating: "4.4/5 (20K+)",
+    services: [
+      "South Indian ", 
+      "Breakfast, Lunch, Dinner", 
+      "Wi-Fi", 
+      "Parking", 
+      "Live Sports"
+    ],
+    price: 350,
+    image: "https://via.placeholder.com/300x200?text=Bhopal+Delight",
+    tags: ["Budget Friendly", "Pet Friendly"]
+  },
+  {
+    name: "Indore Resto",
+    city: "Indore",
+    rating: "4.5/5 (21K+)",
+    services: [
+      "Fast Food", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Takeaway", 
+      "Bar"
+    ],
+    price: 400,
+    image: "https://via.placeholder.com/300x200?text=Indore+Resto",
+    tags: ["Casual", "Takeaway Available"]
+  },
+  {
+    name: "Gwalior Royal",
+    city: "Gwalior",
+    rating: "4.3/5 (18K+)",
+    services: [
+      "Rajasthani", 
+      "Breakfast", "Lunch", "Dinner", 
+      "Wi-Fi", 
+      "Outdoor Seating"
+    ],
+    price: 650,
+    image: "https://via.placeholder.com/300x200?text=Gwalior+Royal",
+    tags: ["Family Friendly", "Valet Parking"]
+  },
+  {
+    name: "Ujjain Flavors",
+    city: "Ujjain",
+    rating: "4.2/5 (16K+)",
+    services: [
+      "Indian", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Family Friendly", 
+      "Parking"
+    ],
+    price: 450,
+    image: "https://via.placeholder.com/300x200?text=Ujjain+Flavors",
+    tags: ["Vegetarian", "Traditional Cuisine"]
+  },
+  {
+    name: "Nagpur Grill",
+    city: "Nagpur",
+    rating: "4.6/5 (22K+)",
+    services: [
+      "Mexican", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Outdoor Seating", 
+      "Takeaway"
+    ],
+    price: 750,
+    image: "https://via.placeholder.com/300x200?text=Nagpur+Grill",
+    tags: ["Casual Dining", "Takeaway Available"]
+  },
+  {
+    name: "Panna Heritage",
+    city: "Panna",
+    rating: "4.3/5 (13K+)",
+    services: [
+      "Indian", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Valet Parking", 
+      "Outdoor Seating"
+    ],
+    price: 550,
+    image: "https://via.placeholder.com/300x200?text=Panna+Heritage",
+    tags: ["Family-Friendly", "Cultural Experience"]
+  },
+  {
+    name: "Pench Adventure",
+    city: "Pench",
+    rating: "4.4/5 (14K+)",
+    services: [
+      "Indian", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Scenic Views", 
+      "Barbecue"
+    ],
+    price: 650,
+    image: "https://via.placeholder.com/300x200?text=Pench+Adventure",
+    tags: ["Nature", "Outdoor Seating"]
+  },
+  {
+    name: "Omkaresh Delights",
+    city: "Omkareshwar",
+    rating: "4.5/5 (15K+)",
+    services: [
+      " Veg Cuisine", 
+      "Breakfast, Lunch, Dinner", 
+      "Wi-Fi", 
+      "River Views", 
+      "Outdoor Seating"
+    ],
+    price: 400,
+    image: "https://via.placeholder.com/300x200?text=Omkareshwar+Delights",
+    tags: ["Quiet Dining", "Spiritual Atmosphere"]
+  },
+  {
+    name: "Orchha Royalty",
+    city: "Orchha",
+    rating: "4.6/5 (16K+)",
+    services: [
+      "Indian", 
+      "Lunch, Dinner", 
+      "Wi-Fi", 
+      "Heritage Ambiance", 
+      "Live Music"
+    ],
+    price: 700,
+    image: "https://via.placeholder.com/300x200?text=Orchha+Royalty",
+    tags: ["Romantic", "Luxury Dining"]
+  },
+  {
+    name: "Jabalpur Feast",
+    city: "Jabalpur",
+    rating: "4.7/5 (20K+)",
+    services: [
+      "North Indian", 
+      "Breakfast, Lunch, Dinner", 
+      "Wi-Fi", 
+      "Takeaway", 
+      "Live Music"
+    ],
+    price: 500,
+    image: "https://via.placeholder.com/300x200?text=Jabalpur+Feast",
+    tags: ["Casual Dining", "Family-Friendly"]
+  },
+  // More restaurants can be added here similarly
+];
+
+
+  var sum=''
+
+  restaurants.forEach(function (elem) {
+  sum += `
+    <div class="h-[455px] w-[300px] bg-white shadow-lg ml-3 mt-[90px]">
+      <img src="${elem.image}" alt="" class="h-[20vw] w-full ">
+
+      <div class="flex items-center justify-evenly p-1">
+        <h1 class="font-extrabold font-serif text-1xl ">${elem.name}</h1>
+        <h4><i class="ri-star-fill text-yellow-400 text-1xl"></i>&nbsp;${elem.rating}</h4>
+      </div>
+
+      <h4 class="font-serif  text-center"><i class="">${elem.services[0]}</i></h4>
+          
+      <div class="flex items-center justify-evenly p-1">
+       
+        <i class="">${elem.services[1]}</i>
+        <i class="">${elem.services[2]}</i>
+        <button class="bg-black h-7 w-7 rounded-3xl text-white text-[14px] text-center">+${elem.services.length - 3}</button>
+      </div>
+
+      <div class="flex items-center justify-evenly p-1 mt-[3px]">
+        <h1>₹${elem.price}/per person</h1>
+        <button class="bg-black h-[35px] w-[90px] text-white text-[14px] text-center hover:bg-red-500 hover:text-white">Book Now</button>
+      </div>
+    </div>
+  `;
+});
+
+  
+  var select=document.querySelector('#hotelContainer')
+  select.innerHTML=sum
+
+</script>
+</html>
